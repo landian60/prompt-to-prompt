@@ -116,7 +116,8 @@ def text2image_ldm(
     latent, latents = init_latent(latent, model, height, width, generator, batch_size)
     context = torch.cat([uncond_embeddings, text_embeddings])
     
-    model.scheduler.set_timesteps(num_inference_steps)
+    model.scheduler.set_
+    steps(num_inference_steps)
     for t in tqdm(model.scheduler.timesteps):
         latents = diffusion_step(model, controller, latents, context, t, guidance_scale)
     
@@ -160,8 +161,9 @@ def text2image_ldm_stable(
     latent, latents = init_latent(latent, model, height, width, generator, batch_size)
     
     # set timesteps
-    extra_set_kwargs = {"offset": 1}
-    model.scheduler.set_timesteps(num_inference_steps, **extra_set_kwargs)
+#     extra_set_kwargs = {"offset": 1}
+#     model.scheduler.set_timesteps(num_inference_steps, **extra_set_kwargs)
+    model.scheduler.set_timesteps(num_inference_steps)
     for t in tqdm(model.scheduler.timesteps):
         latents = diffusion_step(model, controller, latents, context, t, guidance_scale, low_resource)
     
